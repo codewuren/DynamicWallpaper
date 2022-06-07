@@ -81,11 +81,13 @@ void PlayVideo(std::string FileDir, LPWSTR lpParameter) {
 
 int main() {
 	atexit (BeforeExit);
+	std::cout << "Input screen size(like 1280 720): ";
+	std::string sw, sh;
+	std::cin >> sw >> sh;
     std::vector<std::string> Files;
     std::string FilePath = ".\\videos";
     std::string FileFormat = ".mp4";
 	std::string FileDir = GetProgramDir();
-    std::string command = " -noborder -x 2560 -y 1440  -loop 0";
     GetAllFormatFiles(FilePath, Files, FileFormat);
 	std::cout << "Numbers\t" << '|' << '\t' << "Videos" << std::endl;
     for (int i = 0; i < Files.size(); i++) {
@@ -95,6 +97,6 @@ int main() {
 	std::cout << "Input: ";
 	int num;
 	std::cin >> num;
-	PlayVideo(FileDir, LPWSTR((" " + FileDir + Files[num] + command).c_str()));
+	PlayVideo(FileDir, LPWSTR((" " + FileDir + Files[num] +  " -noborder" + " -x " + sw + " -y " + sh + " -loop 0 ").c_str()));
 	return 0;
 }
