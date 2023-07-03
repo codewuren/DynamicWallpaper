@@ -129,6 +129,9 @@
   <ItemGroup>
     <ClCompile Include="DynamicWallpaper.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DynamicWallpaper.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
