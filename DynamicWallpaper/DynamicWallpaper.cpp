@@ -3,11 +3,7 @@
 
 
 // 头文件
-#include <iostream>                 // 标准I/O库
-#include <Windows.h>                // Windows API
-#include <string>                   // 字符串
-#include <vector>                   // Vector容器
-#include "DynamicWallpaper.hpp"     // 必需的变量
+#include "DynamicWallpaper.hpp"
 
 
 /// <summary>
@@ -30,6 +26,19 @@ int main(int argc, char** argv) {
         else if (Arguments[i] == "-y") {
             Height = Arguments[i + 1];
         }
+    }
+
+    // 检测配置文件是否存在
+    std::ifstream Check("config");
+    if (!Check.good()) {
+        std::cout << "Config file didn't exist!\nWe will create a new config file for you!\n";
+        // TODO: 创建一个新的配置文件写入本地，同时文件中需含有默认配置。
+        std::ofstream NewConfigFile("config");
+        // Code...
+    }
+    else {
+        // TODO: 从配置文件导入配置
+
     }
 
     // 输出相应参数值
