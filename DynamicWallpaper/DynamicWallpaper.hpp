@@ -19,9 +19,12 @@ std::string LastPlayedFileFullPath;			// 保存上一次播放文件的全路径
 // 配置结构
 struct Config {
 	std::string ffplayFullPath;				// ffplay 的全路径
-	bool AutoPlayMode = true;				// 是否自动播放上一次播放的文件
+	std::string AutoPlayMode = "true";				// 是否自动播放上一次播放的文件
 }conf;
 
+/// <summary>
+/// 创建新的配置文件，并提醒用户输入 ffplay 的全路径，最后写入默认配置
+/// </summary>
 void CreateConfigFile(Config* conf) {
 	std::ofstream NewConfigFile("config");
 
@@ -37,7 +40,14 @@ void CreateConfigFile(Config* conf) {
 	NewConfigFile.close();
 }
 
-int ReadConfigFile(Config* conf) {
+/// <summary>
+/// 从配置文件中读取配置并赋值给 conf 中的元素
+/// </summary>
+void ReadConfigFile(Config* conf) {
 	std::ifstream ConfigFile("config");
 	// TODO：从配置文件中获取相关配置，并赋值给 conf 中的元素
+	std::string data;
+	std::getline(ConfigFile,conf->ffplayFullPath);
+	std::getline(ConfigFile, conf->AutoPlayMode);
+	ConfigFile.close();
 }

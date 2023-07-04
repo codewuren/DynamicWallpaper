@@ -37,8 +37,9 @@ int main(int argc, char** argv) {
         CreateConfigFile(&NewConf);
     }
     else {
-        // TODO: 从配置文件导入配置
         ReadConfigFile(&conf);
+        // 输出配置
+        std::cout << conf.ffplayFullPath << std::endl << conf.AutoPlayMode << std::endl;
     }
 
     // 输出相应参数值
