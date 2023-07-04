@@ -33,12 +33,12 @@ int main(int argc, char** argv) {
     if (!Check.good()) {
         std::cout << "Config file didn't exist!\nWe will create a new config file for you!\n";
         // TODO: 创建一个新的配置文件写入本地，同时文件中需含有默认配置。
-        std::ofstream NewConfigFile("config");
-        // Code...
+        Config NewConf;
+        CreateConfigFile(&NewConf);
     }
     else {
         // TODO: 从配置文件导入配置
-
+        ReadConfigFile(&conf);
     }
 
     // 输出相应参数值
