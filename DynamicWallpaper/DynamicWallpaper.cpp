@@ -14,7 +14,7 @@ void CreateConfigFile(Config* conf) {
 
 	// 获取 ffplay 的全路径
 	if (conf->ffplayFullPath == "") {
-		std::cout << "Please input the full path of your ffplay!\n";
+		std::cout << "请输入 ffplay 的全路径!\n";
 		std::cin >> conf->ffplayFullPath;
 	}
 
@@ -49,12 +49,6 @@ BOOL CALLBACK EnumWindowsProc(_In_ HWND hwnd, _In_ LPARAM Lparam)
 		// 找到类名为 WorkerW窗口
 		HWND hWorkerw = FindWindowEx(0, hwnd, L"WorkerW", 0);
 
-		// 视频播放窗口
-		HWND hFfplay = FindWindow(_T("SDL_app"), 0);
-
-		// 移动到合适的位置
-		SetWindowPos(hFfplay, NULL, 0, 0, std::stoi(Width), std::stoi(Height), SWP_SHOWWINDOW);
-
 		// 隐藏第一个类名为 WorkerW 的窗口，使播放窗口可见
 		ShowWindow(hWorkerw, SW_HIDE);
 
@@ -84,11 +78,12 @@ void Play(std::string VideoPath, std::string Width, std::string Height) {
 
 	if (CreateProcess(Lffp, LPWSTR(Largu), 0, 0, 0, 0, 0, 0, &si, &pi)) {
 		Sleep(300);
-		HWND hProgman = FindWindow(L"Progman", 0);							// 找到PM窗口
-		SendMessageTimeout(hProgman, 0x52C, 0, 0, 0, 100, 0);				// 给它发送 0x52C 的消息，使其分裂
-		HWND hFfplay = FindWindow(L"SDL_app", 0);							// 找到视频播放窗口
-		SetParent(hFfplay, hProgman);										// 将视频窗口设置为 PM 的子窗口
-		EnumWindows(EnumWindowsProc, 0);									// 找到第二个 WorkerW 窗口并隐藏它
+		HWND hProgman = FindWindow(L"Progman", 0);												// 找到PM窗口
+		SendMessageTimeout(hProgman, 0x52C, 0, 0, 0, 100, 0);									// 给它发送 0x52C 消息，使其分裂
+		HWND hFfplay = FindWindow(L"SDL_app", 0);												// 找到视频播放窗口
+		SetWindowPos(hFfplay, NULL, 0, 0, std::stoi(Width), std::stoi(Height), SWP_SHOWWINDOW);	// 移动到合适的位置
+		SetParent(hFfplay, hProgman);															// 将视频窗口设置为 PM 的子窗口
+		EnumWindows(EnumWindowsProc, 0);														// 找到第二个 WorkerW 窗口并隐藏它
 	}
 	else {
 		std::cout << "创建进程失败！\n";
@@ -133,7 +128,7 @@ int main(int argc, char** argv) {
     // 检测配置文件是否存在
     std::ifstream Check("config");
     if (!Check.good()) {
-        std::cout << "Config file didn't exist!\nWe will create a new config file for you!\n";
+        std::cout << "配置文件不存在!\n将自动创建一个新的配置文件!\n";
         // TODO: 创建一个新的配置文件写入本地，同时文件中需含有默认配置。
         Config NewConf;
         CreateConfigFile(&NewConf);
@@ -147,9 +142,6 @@ int main(int argc, char** argv) {
 
     // 播放
     Play(FilePath, Width, Height);
-
-    // 输出相应参数值
-    std::cout << "FilePath: " << FilePath << "\n" << "Width: " << Width << "\n" << "Height: " << Height << "\n";
     return 0;
 }
 
