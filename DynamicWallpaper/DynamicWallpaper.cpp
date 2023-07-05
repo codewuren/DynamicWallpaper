@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
         CreateConfigFile(&NewConf);
     }
 
-    //读取配置
+    // 读取配置
     ReadConfigFile(&conf);
 
     // 输出配置
