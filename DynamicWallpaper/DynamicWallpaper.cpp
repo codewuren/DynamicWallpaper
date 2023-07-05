@@ -28,6 +28,12 @@ int main(int argc, char** argv) {
         }
     }
 
+    // 检测程序调用是否正确
+    if (FilePath == "" || Width == "" || Height == "") {
+        std::cout << "程序调用错误！\n";
+        exit(1);
+    }
+
     // 检测配置文件是否存在
     std::ifstream Check("config");
     if (!Check.good()) {
@@ -36,11 +42,15 @@ int main(int argc, char** argv) {
         Config NewConf;
         CreateConfigFile(&NewConf);
     }
-    else {
-        ReadConfigFile(&conf);
-        // 输出配置
-        std::cout << conf.ffplayFullPath << std::endl << conf.AutoPlayMode << std::endl;
-    }
+
+    //读取配置
+    ReadConfigFile(&conf);
+
+    // 输出配置
+    std::cout << conf.ffplayFullPath << std::endl << conf.AutoPlayMode << std::endl;
+
+    // 播放
+    Play(FilePath, Width, Height);
 
     // 输出相应参数值
     std::cout << "FilePath: " << FilePath << "\n" << "Width: " << Width << "\n" << "Height: " << Height << "\n";
